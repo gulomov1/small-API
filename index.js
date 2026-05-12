@@ -3,6 +3,8 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import userRouter from "./routes/users.js";
+import productRouter from "./routes/products.js";
+
 dotenv.config();
 
 const app = express();
@@ -21,6 +23,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/users", userRouter);
+app.use("/product", productRouter);
 
 app.listen(PORT, () => {
   console.log(`Server ${PORT}-portda ishlamoqda `);
