@@ -2,7 +2,6 @@ import express from "express";
 
 const router = express.Router();
 
-let isBuyInProgress = false;
 // let buyQueue = Promise.resolve(); // queue resolve
 
 let product = {
@@ -29,32 +28,20 @@ router.post("/buy", async (req, res) => {
     });
   }
 
-  if (isBuyInProgress) {
-    return res.status(429).json({
-      message: "Another purchase is in progress. Please try again.",
-    });
-  }
-
-  isBuyInProgress = true;
-
-  try {
-    if (product.stock < quantity) {
-      return res.status(400).json({
-        message: "Not enough stock",
-        stock: product.stock,
-      });
-    }
-
-    await fakeDatabaseDelay();
-    product.stock -= quantity;
-
-    return res.json({
-      message: "Purchase successful",
+  if (product.stock < quantity) {
+    return res.status(400).json({
+      message: "Not enough stock",
       stock: product.stock,
     });
-  } finally {
-    isBuyInProgress = false;
   }
+
+  product.stock -= quantity;
+  await fakeDatabaseDelay();
+
+  return res.json({
+    message: "Purchase successful",
+    stock: product.stock,
+  });
 });
 
 router.post("/restock", async (req, res) => {
