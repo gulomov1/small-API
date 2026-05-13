@@ -24,13 +24,13 @@ router.post("/buy", async (req, res) => {
 
   if (!quantity || quantity <= 0) {
     return res.status(400).json({
-      message: "Quantity 0 dan katta bo'lishi kerak",
+      message: "Quantity must be greater than 0",
     });
   }
 
   if (isBuyInProgress) {
     return res.status(429).json({
-      message: "Boshqa sotib olish jarayoni davom etmoqda. Qayta urinib ko'ring.",
+      message: "Another purchase is in progress. Please try again.",
     });
   }
 
@@ -39,7 +39,7 @@ router.post("/buy", async (req, res) => {
   try {
     if (product.stock < quantity) {
       return res.status(400).json({
-        message: "Yetarli stock yo'q",
+        message: "Not enough stock",
         stock: product.stock,
       });
     }
@@ -48,7 +48,7 @@ router.post("/buy", async (req, res) => {
     product.stock -= quantity;
 
     return res.json({
-      message: "Sotib olish muvaffaqiyatli",
+      message: "Purchase successful",
       stock: product.stock,
     });
   } finally {
@@ -61,13 +61,13 @@ router.post("/restock", async (req, res) => {
   const quantity = Number(req.body.quantity);
   if (!quantity || quantity <= 0) {
     return res.status(400).json({
-      message: "Quantity 0 dan katta bo'lishi kerak",
+      message: "Quantity must be greater than 0",
     });
   }
   await fakeDatabaseDelay();
   product.stock += quantity;
   res.json({
-    message: "Stock muvaffaqiyatli to'ldirildi",
+    message: "Stock restocked successfully",
     stock: product.stock,
   });
 });

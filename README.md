@@ -64,8 +64,8 @@ Promise.all(requests).then(async (responses) => {
 With stock = 5 and two requests of `quantity: 4`, the **unsafe** version returns:
 
 ```json
-{ "message": "Sotib olish muvaffaqiyatli", "stock": 1 }
-{ "message": "Sotib olish muvaffaqiyatli", "stock": -3 }
+{ "message": "Purchase successful", "stock": 1 }
+{ "message": "Purchase successful", "stock": -3 }
 ```
 
 Both requests succeeded and the stock became **negative**. This is a classic async race condition.
@@ -77,8 +77,8 @@ The `/buy` endpoint uses a boolean flag (`isBuyInProgress`) to ensure only one p
 With the lock in place, the same test now returns:
 
 ```json
-{ "message": "Sotib olish muvaffaqiyatli", "stock": 5 }
-{ "message": "Boshqa sotib olish jarayoni davom etmoqda. Qayta urinib ko'ring." }
+{ "message": "Purchase successful", "stock": 5 }
+{ "message": "Another purchase is in progress. Please try again." }
 ```
 
 Only one request succeeds. The stock never goes negative.
