@@ -101,6 +101,6 @@ node test.js
 
 ## Queue solution
 
-I also tried a queue-based version (`/buy-queue`) on my own. The code is kept commented out in `routes/products.js`.
+I also tried a queue-based version (`/buy-queue`). The code is kept commented out in `routes/products.js`.
 
 ![POST /product/buy-queue](assets/queueSolution.png)

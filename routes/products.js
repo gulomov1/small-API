@@ -59,8 +59,6 @@ router.post("/restock", async (req, res) => {
   });
 });
 
-// I tried a new solution for myself (/buy-queue)
-
 
 /*
 router.post("/buy-queue", async (req, res) => {
