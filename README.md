@@ -10,6 +10,7 @@ A small Node.js + Express API that demonstrates how to handle **async race condi
 | `GET` | `/product` | Returns the current product and stock |
 | `POST` | `/product/buy` | Buys a given quantity (async-safe) |
 | `POST` | `/product/restock` | Adds stock to the product |
+| `POST` | `/product/buy-queue` | Queue-based buy (commented out,) |
 
 ## Examples
 
@@ -98,6 +99,8 @@ To reproduce the race condition test:
 node test.js
 ```
 
-## Notes
+## Queue solution
 
-The in-memory lock used here is for **learning purposes only**. In production, where the backend runs across multiple processes or servers, each instance has its own memory and its own flag. Real systems use database transactions, row-level locks, atomic updates, or distributed locks (e.g. Redis) to achieve the same guarantee across machines.
+I also tried a queue-based version (`/buy-queue`) on my own. The code is kept commented out in `routes/products.js` and `test.js`.
+
+![POST /product/buy-queue](assets/queueSolution.png)
